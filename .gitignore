@@ -132,3 +132,10 @@ dmypy.json
 .vscode
 
 .DS_Store
+/.idea/.gitignore
+/.idea/biofx_python.iml
+/12_mrna/codon_to_aa.py
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/inspectionProfiles/profiles_settings.xml
+/.idea/vcs.xml
