@@ -8,30 +8,36 @@ from typing import NamedTuple, List
 
 
 class Args(NamedTuple):
-    """ Command-line arguments """
+    """Command-line arguments"""
+
     protein: str
     modulo: int
 
 
 # --------------------------------------------------
 def get_args() -> Args:
-    """ Get command-line arguments """
+    """Get command-line arguments"""
 
     parser = argparse.ArgumentParser(
-        description='Infer mRNA from Protein',
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+        description="Infer mRNA from Protein",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
 
-    parser.add_argument('protein',
-                        metavar='protein',
-                        type=str,
-                        help='Input protein or file')
+    parser.add_argument(
+        "protein",
+        metavar="protein",
+        type=str,
+        help="Input protein or file",
+    )
 
-    parser.add_argument('-m',
-                        '--modulo',
-                        metavar='int',
-                        type=int,
-                        default=1000000,
-                        help='Modulo value')
+    parser.add_argument(
+        "-m",
+        "--modulo",
+        metavar="int",
+        type=int,
+        default=1000000,
+        help="Modulo value",
+    )
 
     args = parser.parse_args()
 
@@ -43,35 +49,86 @@ def get_args() -> Args:
 
 # --------------------------------------------------
 def main() -> None:
-    """ Make a jazz noise here """
+    """Make a jazz noise here"""
 
     args = get_args()
     codon_to_aa = {
-        'AAA': 'K', 'AAC': 'N', 'AAG': 'K', 'AAU': 'N', 'ACA': 'T',
-        'ACC': 'T', 'ACG': 'T', 'ACU': 'T', 'AGA': 'R', 'AGC': 'S',
-        'AGG': 'R', 'AGU': 'S', 'AUA': 'I', 'AUC': 'I', 'AUG': 'M',
-        'AUU': 'I', 'CAA': 'Q', 'CAC': 'H', 'CAG': 'Q', 'CAU': 'H',
-        'CCA': 'P', 'CCC': 'P', 'CCG': 'P', 'CCU': 'P', 'CGA': 'R',
-        'CGC': 'R', 'CGG': 'R', 'CGU': 'R', 'CUA': 'L', 'CUC': 'L',
-        'CUG': 'L', 'CUU': 'L', 'GAA': 'E', 'GAC': 'D', 'GAG': 'E',
-        'GAU': 'D', 'GCA': 'A', 'GCC': 'A', 'GCG': 'A', 'GCU': 'A',
-        'GGA': 'G', 'GGC': 'G', 'GGG': 'G', 'GGU': 'G', 'GUA': 'V',
-        'GUC': 'V', 'GUG': 'V', 'GUU': 'V', 'UAC': 'Y', 'UAU': 'Y',
-        'UCA': 'S', 'UCC': 'S', 'UCG': 'S', 'UCU': 'S', 'UGC': 'C',
-        'UGG': 'W', 'UGU': 'C', 'UUA': 'L', 'UUC': 'F', 'UUG': 'L',
-        'UUU': 'F', 'UAA': '*', 'UAG': '*', 'UGA': '*',
+        "AAA": "K",
+        "AAC": "N",
+        "AAG": "K",
+        "AAU": "N",
+        "ACA": "T",
+        "ACC": "T",
+        "ACG": "T",
+        "ACU": "T",
+        "AGA": "R",
+        "AGC": "S",
+        "AGG": "R",
+        "AGU": "S",
+        "AUA": "I",
+        "AUC": "I",
+        "AUG": "M",
+        "AUU": "I",
+        "CAA": "Q",
+        "CAC": "H",
+        "CAG": "Q",
+        "CAU": "H",
+        "CCA": "P",
+        "CCC": "P",
+        "CCG": "P",
+        "CCU": "P",
+        "CGA": "R",
+        "CGC": "R",
+        "CGG": "R",
+        "CGU": "R",
+        "CUA": "L",
+        "CUC": "L",
+        "CUG": "L",
+        "CUU": "L",
+        "GAA": "E",
+        "GAC": "D",
+        "GAG": "E",
+        "GAU": "D",
+        "GCA": "A",
+        "GCC": "A",
+        "GCG": "A",
+        "GCU": "A",
+        "GGA": "G",
+        "GGC": "G",
+        "GGG": "G",
+        "GGU": "G",
+        "GUA": "V",
+        "GUC": "V",
+        "GUG": "V",
+        "GUU": "V",
+        "UAC": "Y",
+        "UAU": "Y",
+        "UCA": "S",
+        "UCC": "S",
+        "UCG": "S",
+        "UCU": "S",
+        "UGC": "C",
+        "UGG": "W",
+        "UGU": "C",
+        "UUA": "L",
+        "UUC": "F",
+        "UUG": "L",
+        "UUU": "F",
+        "UAA": "*",
+        "UAG": "*",
+        "UGA": "*",
     }
 
     possible = [
         len([c for c, res in codon_to_aa.items() if res == aa])
-        for aa in args.protein + '*'
+        for aa in args.protein + "*"
     ]
     print(modprod(possible, args.modulo))
 
 
 # --------------------------------------------------
 def mulmod(a: int, b: int, mod: int) -> int:
-    """ Multiplication with modulo """
+    """Multiplication with modulo"""
 
     # Cf. https://www.geeksforgeeks.org/
     # how-to-avoid-overflow-in-modular-multiplication
@@ -94,7 +151,7 @@ def mulmod(a: int, b: int, mod: int) -> int:
 
 # --------------------------------------------------
 def test_mulmod() -> None:
-    """ Text mulmod """
+    """Text mulmod"""
 
     assert mulmod(2, 4, 3) == 2
     assert mulmod(9223372036854775807, 9223372036854775807, 1000000) == 501249
@@ -102,14 +159,14 @@ def test_mulmod() -> None:
 
 # --------------------------------------------------
 def modprod(xs: List[int], modulo: int) -> int:
-    """ Return the product modulo a value """
+    """Return the product modulo a value"""
 
     return reduce(lambda x, y: mulmod(x, y, modulo), xs, 1)
 
 
 # --------------------------------------------------
 def test_modprod() -> None:
-    """ Test modprod """
+    """Test modprod"""
 
     assert modprod([], 3) == 1
     assert modprod([1, 4, 3], 1000000) == 12
@@ -118,5 +175,5 @@ def test_modprod() -> None:
 
 
 # --------------------------------------------------
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
