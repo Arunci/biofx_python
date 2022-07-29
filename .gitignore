@@ -140,3 +140,4 @@ dmypy.json
 /.idea/inspectionProfiles/profiles_settings.xml
 /.idea/vcs.xml
 .idea
+biofx_python.code-workspace
