@@ -141,3 +141,4 @@ dmypy.json
 /.idea/vcs.xml
 .idea
 biofx_python.code-workspace
+*.sublime-*
