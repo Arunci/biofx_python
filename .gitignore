@@ -142,3 +142,4 @@ dmypy.json
 .idea
 biofx_python.code-workspace
 *.sublime-*
+test.py
